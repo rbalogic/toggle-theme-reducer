@@ -1,24 +1,34 @@
 import { useState } from "react";
 
+const THEMES = {
+  light: "Light",
+  dark: "Dark",
+};
+
 const App = () => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState({
+    prevTheme: "dark",
+    currTheme: "light",
+  });
 
   const toggleTheme = () => {
     setTheme((prevState) => {
-      if (prevState === "dark") {
-        return "light";
+      if (prevState.currTheme === "dark") {
+        return { prevTheme: prevState.currTheme, currTheme: "light" };
       } else {
-        return "dark";
+        return { prevTheme: prevState.currTheme, currTheme: "dark" };
       }
     });
   };
 
   return (
-    <div className={`theme-wrapper ${theme}`}>
+    <div className={`theme-wrapper ${theme.currTheme}`}>
       <div className="container">
-        <h1>Theme Toggler</h1>
-        <button onClick={toggleTheme}>Toggle Theme</button>
-        <p>Current Theme: {theme}</p>
+        <h1>Toggle Theme (useReducer)</h1>
+        <button onClick={toggleTheme}>
+          Show {THEMES[theme.prevTheme]} Theme
+        </button>
+        <p>Current Theme: {THEMES[theme.currTheme]}</p>
       </div>
     </div>
   );
