@@ -1,23 +1,33 @@
-import { useState } from "react";
+import { useCallback, useReducer } from "react";
 import { ThemeContext } from "./ThemeContext";
 import { Theme } from "./Theme";
 
-export const App = () => {
-  const [theme, setTheme] = useState("Light");
+const ACTIONS = {
+  TOGGLE_THEME: "toggle_theme",
+};
 
-  const toggleTheme = () => {
-    setTheme((prevState) => {
-      if (prevState === "Dark") {
-        return "Light";
-      } else {
-        return "Dark";
-      }
-    });
-  };
+const initialState = { theme: "Light" };
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case ACTIONS.TOGGLE_THEME:
+      return {
+        theme: state.theme === "Dark" ? "Light" : "Dark",
+      };
+    default:
+      return state;
+  }
+};
+
+export const App = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const handleToggleTheme = useCallback(() => {
+    dispatch({ type: ACTIONS.TOGGLE_THEME });
+  }, []);
 
   return (
-    <ThemeContext.Provider value={theme}>
-      <Theme toggleTheme={toggleTheme} />
+    <ThemeContext.Provider value={state.theme}>
+      <Theme toggleTheme={handleToggleTheme} />
     </ThemeContext.Provider>
   );
 };
