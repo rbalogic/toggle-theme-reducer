@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const App = () => {
-  const [theme, setTheme] = useState("default");
+  const [theme, setTheme] = useState("light");
 
   const toggleTheme = () => {
     setTheme((prevState) => {
@@ -14,9 +14,12 @@ const App = () => {
   };
 
   return (
-    <div>
-      <button onClick={toggleTheme}>Toggle Theme</button>
-      <p>Current Theme: {theme}</p>
+    <div className={`theme-wrapper ${theme}`}>
+      <div className="container">
+        <h1>Theme Toggler</h1>
+        <button onClick={toggleTheme}>Toggle Theme</button>
+        <p>Current Theme: {theme}</p>
+      </div>
     </div>
   );
 };
