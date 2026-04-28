@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Repos from "./Repos";
 
 const THEMES = {
   light: "Light",
@@ -29,6 +30,9 @@ const App = () => {
           Show {THEMES[theme.prevTheme]} Theme
         </button>
         <p>Current Theme: {THEMES[theme.currTheme]}</p>
+      </div>
+      <div className="container">
+        <Repos />
       </div>
     </div>
   );
