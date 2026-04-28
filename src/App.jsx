@@ -1,40 +1,24 @@
 import { useState } from "react";
-import Repos from "./Repos";
+import { ThemeContext } from "./ThemeContext";
+import { Theme } from "./Theme";
 
-const THEMES = {
-  light: "Light",
-  dark: "Dark",
-};
-
-const App = () => {
-  const [theme, setTheme] = useState({
-    prevTheme: "dark",
-    currTheme: "light",
-  });
+export const App = () => {
+  const [theme, setTheme] = useState("Light");
 
   const toggleTheme = () => {
     setTheme((prevState) => {
-      if (prevState.currTheme === "dark") {
-        return { prevTheme: prevState.currTheme, currTheme: "light" };
+      if (prevState === "Dark") {
+        return "Light";
       } else {
-        return { prevTheme: prevState.currTheme, currTheme: "dark" };
+        return "Dark";
       }
     });
   };
 
   return (
-    <div className={`theme-wrapper ${theme.currTheme}`}>
-      <div className="container">
-        <h1>Toggle Theme (useReducer)</h1>
-        <button onClick={toggleTheme}>
-          Show {THEMES[theme.prevTheme]} Theme
-        </button>
-        <p>Current Theme: {THEMES[theme.currTheme]}</p>
-      </div>
-      <div className="container">
-        <Repos />
-      </div>
-    </div>
+    <ThemeContext.Provider value={theme}>
+      <Theme toggleTheme={toggleTheme} />
+    </ThemeContext.Provider>
   );
 };
 

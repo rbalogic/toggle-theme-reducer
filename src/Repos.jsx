@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { ThemeContext } from "./ThemeContext";
 
 const REPO_EVENTS_URL =
   "https://api.github.com/repos/rbalogic/toggle-theme-reducer/events";
 
 const Repos = () => {
   const [latestEvent, setLatestEvent] = useState(null);
+  const theme = useContext(ThemeContext);
 
   useEffect(() => {
     const fetchLatestEvent = async () => {
@@ -17,6 +19,7 @@ const Repos = () => {
 
   return (
     <div>
+      <p>Current Theme: {theme}</p>
       <h1>Latest Repo Activity</h1>
       {latestEvent && (
         <div>
